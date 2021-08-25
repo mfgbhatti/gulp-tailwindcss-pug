@@ -40,12 +40,6 @@ To change the path of files and destination/build folder, edit options in **conf
          css: "./dist/css",
          js: "./dist/js",
          img: "./dist/img"
-     },
-     build: {
-         base: "./build",
-         css: "./build/css",
-         js: "./build/js",
-         img: "./build/img"
      }
   }
   ...
