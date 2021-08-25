@@ -16,32 +16,3 @@ npm run dev // or yarn dev
 ```sh
 npm run prod // or yarn prod
 ```
-
-# Configuration
-
-
-To change the path of files and destination/build folder, edit options in **config.js** file
-```sh
-{
-  config: {
-      ...
-      port: 9050 // browser preview port
-  },
-  paths: {
-     root: "./",
-     src: {
-        base: "./src",
-        css: "./src/css",
-        js: "./src/js",
-        img: "./src/img"
-     },
-     dist: {
-         base: "./dist",
-         css: "./dist/css",
-         js: "./dist/js",
-         img: "./dist/img"
-     }
-  }
-  ...
-}
-```
