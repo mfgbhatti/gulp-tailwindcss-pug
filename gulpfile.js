@@ -2,13 +2,14 @@ const { src, dest, parallel, series, watch } = require("gulp");
 const options = require("./config");
 const bsync = require("browser-sync").create();
 const postCss = require("gulp-postcss");
+const purgecss = require("gulp-purgecss");
+const cleanCSS = require("gulp-clean-css");
+const pug = require("gulp-pug");
+const htmlmin = require("gulp-htmlmin");
+const concat = require("gulp-concat");
+const uglify = require("gulp-uglify");
 const plumber = require("gulp-plumber");
 const notify = require("gulp-notify");
-const pug = require("gulp-pug");
-const concat = require("gulp-concat");
-const cleanCSS = require("gulp-clean-css");
-const uglify = require("gulp-uglify");
-const purgecss = require("gulp-purgecss");
 const del = require("del");
 
 // Error Handling
@@ -63,7 +64,7 @@ function css() {
 }
 
 // HTML with Pug
-function html() {
+function pugHtml() {
   return src(`${options.paths.src.base}/**.pug`)
     .pipe(
       pug({
@@ -76,16 +77,27 @@ function html() {
     .pipe(bsync.stream());
 }
 
+// Minify HTML
+function html() {
+  return src(`${options.paths.src.base}/**.html`)
+    .pipe(htmlmin({ collapseWhitespace: true }))
+    .pipe(dest(options.paths.dist.base))
+    .pipe(bsync.stream());
+}
 // JS scripts
 function js() {
-  return src(
-    `${options.paths.src.js}/libs/**/*.js`,
-    `${options.paths.src}/*.js`
-  )
+  return src(`${options.paths.src.js}/*.js`)
     .pipe(uglify())
     .pipe(concat({ path: "script.js" }))
     .pipe(dest(options.paths.dist.js))
     .pipe(bsync.stream());
+}
+
+// Images
+function img() {
+  return src(`${options.paths.src.img}/*.{jpg,svg,png}`).pipe(
+    dest(options.paths.dist.img)
+  );
 }
 
 // Clean dist folder
@@ -95,15 +107,17 @@ function clean() {
 
 // Watch Files
 function watchFiles() {
-  watch(`${options.paths.src.base}/*.pug`, html);
+  watch(`${options.paths.src.base}/*.{html,pug}`, series(pugHtml, html));
   watch([options.config.tailwindjs, `${options.paths.src.css}/*.scss`], css);
   watch(`${options.paths.src.js}/*.js`, js);
+  watch(`${options.paths.src.img}/*{jpg,svg,png}`, img);
 }
 
 // Gulp default
 exports.default = series(
   clean, // Clean Dist Folder
-  parallel(js, css, html), //Run All tasks in parallel
+  parallel(js, css, img, pugHtml, html), //Run All tasks in parallel
   browserSync, // Live Preview Build
   watchFiles // Watch for Live Changes
 );
+
