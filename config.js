@@ -1,3 +1,5 @@
+let source = "./src/assets";
+let destination = "./dist/assets";
 module.exports = {
   config: {
     tailwindjs: "./tailwind.config.js",
@@ -6,17 +8,25 @@ module.exports = {
   },
   paths: {
     root: "./",
+    clean: destination + "/",
     src: {
       base: "./src",
-      css: "./src/assets/css",
-      js: "./src/assets/js",
-      img: "./src/assets/img",
+      html: "./src/**/*.pug",
+      css: source + "/css/",
+      js: source + "/js/",
+      img: source + "/img/",
     },
     dist: {
       base: "./dist",
-      css: "./dist/assets/css",
-      js: "./dist/assets/js",
-      img: "./dist/assets/img",
+      css: destination + "/css/",
+      js: destination + "/js/",
+      img: destination + "/img/",
     },
+    watch : {
+      html: "./src/**/*.pug",
+      css: source + "/css/*.scss",
+      js: source + "/js/*.js",
+      img: source + "/img/*.{png,jpg,gif,ico,svg,webp}",
+    }
   },
 };

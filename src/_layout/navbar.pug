@@ -1,0 +1,18 @@
+mixin menu-item(item)
+  li.ml-6=item
+div(class="w-full bg-black h-28")
+  div(class="flex flex-row")
+    div(class="basis-1/4 text-blue-600")
+      img(src="./assets/img/Logo-top.png", alt="Logo" width="237px" height="61" class="mt-8 ml-16")
+    div(class="w-px mt-px bg-white h-28 opacity-20")
+    div(class="flex flex-row basis-1/2")
+      div(class="basis-1/4")
+      div(class="basis-3/4")
+        ul(class="flex flex-row text-white uppercase mt-12 justify-end mr-8")
+          +menu-item('home')
+          +menu-item('about us')
+          +menu-item('services')
+          +menu-item('career')
+          +menu-item('contact us')
+    div(class="w-px mt-px bg-white h-28 opacity-20")
+    div(class="basis-1/4") cta!

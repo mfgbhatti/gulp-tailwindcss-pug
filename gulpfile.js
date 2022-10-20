@@ -107,10 +107,10 @@ function clean() {
 
 // Watch Files
 function watchFiles() {
-  watch(`${options.paths.src.base}/*.{html,pug}`, series(pugHtml, html));
-  watch([options.config.tailwindjs, `${options.paths.src.css}/*.scss`], css);
-  watch(`${options.paths.src.js}/*.js`, js);
-  watch(`${options.paths.src.img}/*{jpg,svg,png}`, img);
+  watch(`${options.paths.watch.html}`, series(pugHtml, css, html));
+  // watch([`${options.config.tailwindjs}`, `${options.paths.watch.css}`], css);
+  watch(`${options.paths.watch.js}`, js);
+  watch(`${options.paths.watch.img}`, img);
 }
 
 // Gulp default

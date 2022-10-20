@@ -1,6 +1,9 @@
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    // Example content paths...
+    "./dist/index.html",
+    "./src/**/*.pug",
+  ],
   theme: {
     extend: {},
   },
